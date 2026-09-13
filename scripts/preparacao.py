@@ -26,10 +26,10 @@ def preparar_dados(dados, test_size=0.2, random_state=42):
         stratify=y,
     )
 
-    numeric_columns = X_train.select_dtypes(include=["number"]).columns
-    categorical_columns = X_train.select_dtypes(
-        include=["object", "category"]
-    ).columns
+    numeric_columns = X_train.columns[
+        X_train.dtypes.map(pd.api.types.is_numeric_dtype)
+    ]
+    categorical_columns = X_train.columns[~X_train.columns.isin(numeric_columns)]
 
     medians = X_train[numeric_columns].median()
     X_train.loc[:, numeric_columns] = (

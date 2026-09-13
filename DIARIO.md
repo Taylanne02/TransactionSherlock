@@ -37,3 +37,13 @@ Treinamos o `DummyClassifier` usando a estratégia `prior`, a mesma divisão de 
 Esse resultado foi usado como linha de base: o modelo atribui a mesma probabilidade de fraude às transações e, por isso, não consegue separá-las melhor que o acaso.
 
 Próximo passo: treinar a regressão logística na mesma divisão e comparar o resultado com esta linha de base.
+
+## 13/09 19:04
+
+Treinamos a `LogisticRegression` usando a mesma preparação, divisão e métrica do `DummyClassifier`. As colunas categóricas foram transformadas com one-hot encoding, as numéricas foram normalizadas e foi usado `class_weight="balanced"` por causa do desbalanceamento.
+
+A primeira execução falhou por falta de memória durante a identificação dos tipos de coluna. Ajustamos a preparação para consultar os tipos sem copiar a tabela inteira e executamos novamente.
+
+O modelo gerou ROC-AUC = 0,8617 em 258,11 segundos, com 2.733 colunas após a codificação. A otimização atingiu o limite de 100 iterações e apresentou um aviso de não convergência; por isso, este resultado será tratado como a primeira tentativa da regressão logística, não como uma configuração final.
+
+Próximo passo: treinar o `RandomForest` usando a mesma divisão e comparar com o `DummyClassifier` e a regressão logística.
