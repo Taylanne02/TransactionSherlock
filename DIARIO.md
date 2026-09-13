@@ -47,3 +47,11 @@ A primeira execução falhou por falta de memória durante a identificação dos
 O modelo gerou ROC-AUC = 0,8617 em 258,11 segundos, com 2.733 colunas após a codificação. A otimização atingiu o limite de 100 iterações e apresentou um aviso de não convergência; por isso, este resultado será tratado como a primeira tentativa da regressão logística, não como uma configuração final.
 
 Próximo passo: treinar o `RandomForest` usando a mesma divisão e comparar com o `DummyClassifier` e a regressão logística.
+
+## 13/09 19:13
+
+Treinamos o `RandomForest` usando a mesma preparação, divisão e métrica dos modelos anteriores. As colunas categóricas receberam codificação ordinal. Usamos 50 árvores, profundidade máxima 20, 50% das linhas por árvore e `class_weight="balanced"`.
+
+O modelo gerou ROC-AUC = 0,9127 em 23,67 segundos. O resultado foi melhor que o `DummyClassifier` (0,5000) e a `LogisticRegression` (0,8617). Nesta primeira tentativa, a floresta foi mais rápida que a regressão logística e apresentou o melhor resultado até agora.
+
+Próximo passo: treinar o `LightGBM` usando a mesma divisão e comparar os resultados.

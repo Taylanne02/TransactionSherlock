@@ -1,4 +1,4 @@
 seminario.md
 dados/IEEE-CIS/
 __pycache__/
-.pyc
+*.pyc
