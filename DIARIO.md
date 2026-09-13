@@ -30,3 +30,10 @@ Na execução com os dados reais, o treino ficou com 472.432 linhas e 16.530 fra
 
 Próximo passo: criar as preparações específicas e treinar o `DummyClassifier`, a regressão logística, a floresta aleatória, o LightGBM e o CatBoost usando a mesma divisão.
 
+## 13/09 18:52
+
+Treinamos o `DummyClassifier` usando a estratégia `prior`, a mesma divisão de treino e validação e a métrica ROC-AUC. O resultado foi ROC-AUC = 0,5000, com 0,04 segundo de execução.
+
+Esse resultado foi usado como linha de base: o modelo atribui a mesma probabilidade de fraude às transações e, por isso, não consegue separá-las melhor que o acaso.
+
+Próximo passo: treinar a regressão logística na mesma divisão e comparar o resultado com esta linha de base.
