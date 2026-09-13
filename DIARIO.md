@@ -22,3 +22,11 @@ Encontramos 569.877 transações normais e 20.663 fraudulentas, o que correspond
 
 Próximo passo: separar `isFraud` como alvo, remover `TransactionID`, dividir os dados em treino e validação e definir o preenchimento simples dos valores ausentes.
 
+## 13/09 18:17
+
+Criamos `scripts/preparacao.py` para preparar a base comum dos modelos. `isFraud` foi separado como alvo e `TransactionID` foi removido das variáveis. Os dados foram divididos de forma estratificada em 80% para treino e 20% para validação, usando `random_state=42`.
+
+Na execução com os dados reais, o treino ficou com 472.432 linhas e 16.530 fraudes. A validação ficou com 118.108 linhas e 4.133 fraudes. As duas partes mantiveram a proporção de 3,50% de fraudes e ficaram sem valores ausentes: valores numéricos foram preenchidos pela mediana do treino e valores categóricos receberam `ausente`.
+
+Próximo passo: criar as preparações específicas e treinar o `DummyClassifier`, a regressão logística, a floresta aleatória, o LightGBM e o CatBoost usando a mesma divisão.
+
