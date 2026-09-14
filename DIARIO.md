@@ -55,3 +55,11 @@ Treinamos o `RandomForest` usando a mesma preparação, divisão e métrica dos 
 O modelo gerou ROC-AUC = 0,9127 em 23,67 segundos. O resultado foi melhor que o `DummyClassifier` (0,5000) e a `LogisticRegression` (0,8617). Nesta primeira tentativa, a floresta foi mais rápida que a regressão logística e apresentou o melhor resultado até agora.
 
 Próximo passo: treinar o `LightGBM` usando a mesma divisão e comparar os resultados.
+
+## 13/09 21:53
+
+Treinamos o `LightGBM` usando a mesma preparação, divisão e métrica dos modelos anteriores. As colunas categóricas receberam codificação ordinal e foi usado `class_weight="balanced"`. A configuração inicial teve 100 árvores, `learning_rate=0,05` e `num_leaves=31`.
+
+O modelo gerou ROC-AUC = 0,9137 em 15,84 segundos, com 432 colunas após a codificação. O resultado foi ligeiramente melhor que o `RandomForest` (0,9127), além de ter levado menos tempo, e superou a `LogisticRegression` (0,8617) e o `DummyClassifier` (0,5000).
+
+Próximo passo: treinar o `CatBoost` usando a mesma divisão e comparar os resultados.
