@@ -89,3 +89,9 @@ Revisamos os resultados da primeira rodada e atualizamos o `README.md` com a pre
 O `LightGBM` apresentou o melhor resultado, com ROC-AUC = 0,9137, ligeiramente acima do `RandomForest` (0,9127) e com menor tempo de execução. Ele foi escolhido como o modelo principal da primeira rodada.
 
 Próximo passo: criar o `requirements.txt` e complementar as instruções de execução do projeto.
+
+## 14/09 10:34
+
+Criamos o `requirements.txt` com as versões das bibliotecas usadas e completamos no `README.md` as instruções de instalação, organização dos dados e execução dos scripts.
+
+Executamos novamente todos os comandos documentados. O diagnóstico, a preparação e os cinco modelos terminaram sem erro. Os resultados de ROC-AUC foram iguais aos da primeira rodada: DummyClassifier 0,5000, regressão logística 0,8617, Random Forest 0,9127, LightGBM 0,9137 e CatBoost 0,8915. A regressão logística voltou a apresentar o aviso de não convergência já registrado. Os tempos variaram um pouco entre as execuções.

@@ -2,6 +2,14 @@
 
 ## Como rodar
 
+Use Python 3.10 ou uma versão mais recente. As bibliotecas usadas estão no `requirements.txt`.
+
+No terminal, a partir da pasta do projeto, instale as dependências:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
 O dataset não é enviado ao GitHub porque seus arquivos são muito grandes. Para executar o projeto, baixe os dados no [Kaggle](https://www.kaggle.com/competitions/ieee-fraud-detection/overview) e monte a pasta localmente.
 
 1. Acesse o link do Kaggle, faça login e baixe os arquivos da competição **IEEE-CIS Fraud Detection**.
@@ -19,6 +27,20 @@ dados/
 ```
 
 A pasta `dados/IEEE-CIS/` está no `.gitignore` e não deve ser enviada ao GitHub. Depois dessa montagem, os arquivos podem ser usados pelo código do projeto.
+
+Com os dados no lugar, execute os scripts na seguinte ordem:
+
+```bash
+python scripts/01_diagnostico.py
+python scripts/preparacao.py
+python scripts/dummy_classifier.py
+python scripts/logistic_regression.py
+python scripts/random_forest.py
+python scripts/lightgbm_model.py
+python scripts/catboost_model.py
+```
+
+O diagnóstico e a preparação mostram as características da base. Os demais scripts treinam os modelos e exibem o ROC-AUC e o tempo de execução. Como os arquivos são grandes, cada script pode levar alguns minutos e precisa ser executado com os dados locais disponíveis.
 
 ## Problema e porque importa
 
