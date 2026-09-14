@@ -63,3 +63,21 @@ Treinamos o `LightGBM` usando a mesma preparação, divisão e métrica dos mode
 O modelo gerou ROC-AUC = 0,9137 em 15,84 segundos, com 432 colunas após a codificação. O resultado foi ligeiramente melhor que o `RandomForest` (0,9127), além de ter levado menos tempo, e superou a `LogisticRegression` (0,8617) e o `DummyClassifier` (0,5000).
 
 Próximo passo: treinar o `CatBoost` usando a mesma divisão e comparar os resultados.
+
+## 14/09 00:14
+
+Treinamos o `CatBoost` usando a mesma preparação, divisão e métrica dos outros modelos. As 31 colunas categóricas foram informadas diretamente ao modelo, sem codificação ordinal ou one-hot. Usamos 100 iterações, `learning_rate=0,05`, profundidade 6 e `auto_class_weights="Balanced"`.
+
+O modelo gerou ROC-AUC = 0,8915 em 56,77 segundos. Nesta configuração inicial, ficou abaixo do `LightGBM` e do `RandomForest`, mas acima da `LogisticRegression` e do `DummyClassifier`.
+
+Resumo da primeira rodada:
+
+| modelo | ROC-AUC | tempo |
+|---|---:|---:|
+| DummyClassifier | 0,5000 | 0,04 s |
+| LogisticRegression | 0,8617 | 258,11 s |
+| RandomForest | 0,9127 | 23,67 s |
+| LightGBM | 0,9137 | 15,84 s |
+| CatBoost | 0,8915 | 56,77 s |
+
+Próximo passo: revisar os resultados da rodada e atualizar o `README.md` com os modelos, as métricas e a comparação com a linha de base.
