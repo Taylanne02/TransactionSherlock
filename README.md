@@ -1,4 +1,4 @@
-# Título
+# Detecção de transações fraudulentas com aprendizado de máquina
 
 ## Como rodar
 
@@ -43,13 +43,25 @@ Link: [https://www.kaggle.com/competitions/ieee-fraud-detection/overview](https:
 
 ## O que foi feito antes de modelar
 
-Os dados foram separados em arquivos de treino e teste. Antes de treinar os modelos, a tabela de transações será relacionada à tabela de identidade usando `TransactionID`. A coluna `isFraud` será usada como variável-alvo, com `0` para transação normal e `1` para transação fraudulenta.
+Relacionamos as tabelas de transação e identidade usando `TransactionID`. Após a junção, o conjunto ficou com 590.540 transações e 434 colunas: 403 numéricas e 31 categóricas. Foram encontradas 414 colunas com algum valor ausente.
 
-Também serão verificados os valores ausentes e as colunas categóricas. Esses dados precisarão ser preparados para que possam ser utilizados pelos modelos de aprendizado de máquina. Como o conjunto de teste não possui a coluna `isFraud`, os modelos serão comparados usando uma divisão de validação feita a partir dos dados de treino.
+Separamos `isFraud` como variável-alvo, com `0` para transação normal e `1` para transação fraudulenta, e removemos `TransactionID` das variáveis usadas pelos modelos. Os dados foram divididos em 80% para treino e 20% para validação, de forma estratificada e usando `random_state=42`. O treino ficou com 472.432 linhas e a validação com 118.108 linhas.
 
-Não há colunas literalmente sem nome nos arquivos. Algumas possuem nomes genéricos ou anonimizados, como `V1` a `V339` e `id_01` a `id_38`. Elas não serão descartadas apenas por não terem nomes descritivos, pois ainda podem ajudar na identificação de fraudes. A remoção de colunas só será feita se a análise mostrar que elas estão totalmente vazias ou são inadequadas para a modelagem.
+Os valores ausentes numéricos foram preenchidos pela mediana calculada no conjunto de treino. Os valores ausentes categóricos receberam o texto `ausente`. As colunas anonimizadas, como `V1` a `V339` e `id_01` a `id_38`, foram mantidas, pois não foram removidas apenas por terem nomes genéricos.
 
 ## Quais modelos foram utilizados
+
+Testamos cinco modelos usando a mesma preparação, divisão de treino e validação e métrica ROC-AUC:
+
+| modelo | preparação específica |
+|---|---|
+| `DummyClassifier` | linha de base com a estratégia `prior` |
+| Regressão logística | normalização das variáveis numéricas e one-hot encoding das categóricas |
+| Random Forest | codificação ordinal das categóricas |
+| LightGBM | codificação ordinal das categóricas |
+| CatBoost | tratamento direto das variáveis categóricas |
+
+Nos modelos de classificação, exceto o `DummyClassifier`, foi usado balanceamento de classes, pois apenas 3,50% das transações eram fraudulentas.
 
 ## Resultados
 
@@ -59,6 +71,24 @@ Essa métrica foi escolhida porque a base possui muito mais transações normais
 
 O valor do ROC-AUC varia de 0 a 1: quanto mais próximo de 1, melhor a separação entre as classes. Um valor próximo de 0,5 indica um resultado semelhante ao acaso.
 
+Os resultados abaixo foram obtidos na mesma divisão estratificada de treino e validação:
+
+| modelo | ROC-AUC | tempo de treinamento e previsão |
+|---|---:|---:|
+| `DummyClassifier` | 0,5000 | 0,04 s |
+| Regressão logística | 0,8617 | 258,11 s |
+| Random Forest | 0,9127 | 23,67 s |
+| LightGBM | 0,9137 | 15,84 s |
+| CatBoost | 0,8915 | 56,77 s |
+
+O `DummyClassifier` representa a linha de base: seu ROC-AUC de 0,5000 indica um resultado equivalente ao acaso. O melhor resultado foi do LightGBM, com ROC-AUC de 0,9137, ligeiramente acima do Random Forest e com menor tempo de execução. Por isso, ele foi escolhido como o modelo principal da primeira rodada.
+
 ## O que não funcionou
 
+A primeira execução da regressão logística apresentou falta de memória durante a identificação dos tipos de coluna. Ajustamos a preparação para consultar os tipos sem copiar a tabela inteira. Depois disso, o modelo foi executado, mas atingiu o limite de 100 iterações e apresentou um aviso de não convergência. Além disso, foi o modelo mais lento da rodada.
+
+O CatBoost executou normalmente, mas seu ROC-AUC de 0,8915 ficou abaixo dos resultados do Random Forest e do LightGBM. Por isso, não foi escolhido como modelo principal nesta primeira comparação.
+
 ## Limitação honesta do trabalho
+
+A validação foi feita com uma divisão aleatória estratificada. Ela é simples e mantém a proporção de fraudes, mas não representa perfeitamente o uso do modelo para prever transações futuras. Além disso, o conjunto de teste do Kaggle não possui os rótulos públicos de fraude, então o resultado apresentado foi medido apenas no conjunto de validação.

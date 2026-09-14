@@ -81,3 +81,11 @@ Resumo da primeira rodada:
 | CatBoost | 0,8915 | 56,77 s |
 
 Próximo passo: revisar os resultados da rodada e atualizar o `README.md` com os modelos, as métricas e a comparação com a linha de base.
+
+## 14/09 09:55
+
+Revisamos os resultados da primeira rodada e atualizamos o `README.md` com a preparação realizada, os cinco modelos testados, as métricas ROC-AUC, os tempos de execução, a comparação com a linha de base, os problemas encontrados e a limitação do experimento.
+
+O `LightGBM` apresentou o melhor resultado, com ROC-AUC = 0,9137, ligeiramente acima do `RandomForest` (0,9127) e com menor tempo de execução. Ele foi escolhido como o modelo principal da primeira rodada.
+
+Próximo passo: criar o `requirements.txt` e complementar as instruções de execução do projeto.
